@@ -1,0 +1,29 @@
+##Coursera R Programming Assignment 2
+
+makeCacheMatrix <- function(x = Matrix()) {
+  m<-NULL
+  set<-function(y){
+    x<<-y
+    m<<-NULL
+  }
+  get<-function()x
+  setinverse<-function(Matrix)m<<-Matrix ##assigns "Matrix" value
+  getinverse<-function()m
+  list(set=set,                           ##list all defined functions
+       get=get,
+       setinverse=setinverse,
+       getinverse=getinverse)
+}
+
+cacheSolve <- function(x, ...) {          ## Return matrix that is inverse of 'x'
+  m<-x$getinverse()
+  if (!is.null(m)){                       ## 'x' has been saved, give notification
+    message("getting cached data")
+    return(m)
+  }
+  message("m not saved, calculating inverse matrix")         ##'x' has not been saved, give notification
+  data<-x$get()
+  m<-solve(data,...)                      ## solve unsaved data from beginning, then save it
+  x$setinverse(m)
+  m
+}
